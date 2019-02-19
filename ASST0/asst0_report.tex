@@ -1,0 +1,130 @@
+\documentclass[11pt, english]{article}
+\usepackage[utf8]{inputenc} %packages
+\usepackage[T1]{fontenc}
+\usepackage{babel}
+%opening
+\title{CSE3211: Operating System Assignment 0} %title of the report
+% author name: you and your partner
+\author{Al Md. Aladin\\
+	student ID: 2015-516-820 \& roll number: FH-59
+	\and
+Sharear Bin Amin\\
+student ID: 2015-016-816 \& roll number: FH-55
+}
+\date{August 13, 2018} %change date as requires
+\begin{document}
+\maketitle
+\section{Questions \& Answers}
+\textit{Q1. What is the vm system called that is configured for assignment 0?}\newline % single new line
+\textbf{Answer: dumbvm from kern/arch/mips/conf/conf.arch
+	}\\ \\ % \\ \\ two new line
+\textit{Q2. Which register number is used for the stack pointer (sp) in OS/161?}\newline
+\textbf{Answer: \#define sp \$29 /* stack pointer */  from kern/arch/mips/include/kern/regdefs.h
+	}\\ \\
+\textit{Q3. What bus/busses does OS/161 support?}\newline
+\textbf{Answer: LAMEbus      from kern/arch/sys161/include/bus.h
+	}\\ \\
+\textit{Q4. What is the difference between splhigh and spl0?}\newline
+\textbf{Answer: splhigh()    sets IPL to the highest value, disabling all interrupts.
+	spl0()       sets IPL to 0, enabling all interrupts.
+	from os161-ASST0/kern/include/spl.h
+	}\\ \\
+\textit{Q5. Why do we use typedefs like u\_int32\_t instead of simply saying "int"?}\newline
+\textbf{Answer: To make sure that we really get a 32-bit unsigned integer
+	(unsigned int depends on the platform)
+	from kern/arch/mips/include/types.h
+	}\\ \\
+\textit{Q6. What must be the first thing in the process control block?}\newline
+\textbf{Answer: pcb\_switchstack must be the first thing in the process control block.
+	}\\ \\
+\textit{Q7. What does splx return?}\newline
+\textbf{Answer: The old interrupt state (an integer)
+	from os161-ASST0/kern/include/spl.h
+}\\ \\
+\textit{Q8. What is the highest interrupt level?}\newline
+\textbf{Answer: \#define IPL\_HIGH   1
+	from  os161-ASST0/kern/include/spl.h
+}\\ \\
+\textit{Q9. What function is called when user-level code generates a fatal fault?}\newline % single new line
+\textbf{Answer: void kill\_curthread(vaddr\_t epc, unsigned code, vaddr\_t vaddr)
+	from os161-ASST0/kern/arch/mips/mips/trap.c
+}\\ \\
+\textit{Q10. How frequently are hardclock interrupts generated?}\newline
+\textbf{Answer: 100 times a second   \#define HZ  100
+	from kern/include/clock.h
+}\\ \\ % \\ \\ two new line
+\textit{Q11. What functions comprise the standard interface to a VFS device?}\newline
+\textbf{Answer: vfs\_setcurdir, vfs\_clearcurdir, vfs\_getcurdir, vfs\_sync, vfs\_getroot,
+	vfs\_getdevname, vfs\_lookup, vfs\_lookparent, vfs\_open, vfs\_close,
+	vfs\_readlink, vfs\_symlink, vfs\_mkdir, vfs\_link, vfs\_remove, vfs\_rmdir,
+	vfs\_rename, vfs\_chdir, vfs\_getcwd, vfs\_bootstrap, vfs\_initbootfs,
+	vfs\_setbootfs, vfs\_clearbootfs, vfs\_adddev, vfs\_addfs, vfs\_mount,
+	vfs\_unmount, and vfs\_unmountall
+	from  os161-ASST0/kern/include/vfs.h
+}\\ \\
+\textit{Q12. How many characters are allowed in a volume name?}\newline
+\textbf{Answer: \#define SFS\_VOLNAME\_SIZE  32  /* max length of volume name */
+	from kern/include/kern/sfs.h
+}\\ \\
+\textit{Q13. How many direct blocks does an SFS file have?}\newline
+\textbf{Answer: \#define SFS\_NDIRECT       15            /* \# of direct blocks in inode */
+	from kern/include/kern/sfs.h
+}\\ \\
+\textit{Q14. What is the standard interface to a file system (i.e., what functions must you
+	implement to implement a new file system)?}\newline
+\textbf{Answer: fsop\_sync, fsop\_getvolname, fsop\_getroot, fsop\_umount
+	from kern/include/fs.h
+}\\ \\
+\textit{Q15. What function puts a thread to sleep?}\newline
+\textbf{Answer: Void wchan\_sleep(struct wchan *wc, struct spinlock *lk)
+	from kern/thread/thread.c
+	}\\ \\
+\textit{Q16. How large are OS/161 pids?}\newline
+\textbf{Answer: typedef int32\_t pid\_t; /* Process ID */
+	32 bits / 4 bytes from kern/include/kern/types.h
+	}\\ \\
+\textit{Q17. What operations can you do on a vnode?}\newline % single new line
+\textbf{Answer: vop\_eachopen,vop\_ reclaim,vop\_ read, vop\_readlink, vop\_getdirentry, vop\_write, vop\_ioctl, vop\_stat, vop\_gettype, vop\_tryseek, vop\_fsync, vop\_mmap, vop\_truncate, vop\_namefile, vop\_creat, vop\_symlink, vop\_mkdir, vop\_link, vop\_remove, vop\_rmdir, vop\_rename, vop\_lookup, vop\_lookparent
+	from kern/include/vnode.h
+	}\\ \\ % \\ \\ two new line
+\textit{Q18. What is the maximum path length in OS/161?}\newline
+\textbf{Answer: * Longest full path name */ \#define PATH\_MAX 1024 
+	from kern/include/kern/limits.h
+	}\\ \\
+\textit{Q19. What is the system call number for a reboot?}\newline
+\textbf{Answer: The system call number for a reboot is 119.
+	}\\ \\
+\textit{Q20. Where is STDIN\_FILENO defined?}\newline
+\textbf{Answer: \#define STDIN\_FILENO 0 /* Standard input */ 
+	from kern/include/kern/unistd.h
+	}\\ \\
+\textit{Q21. What does kmain() do?}\newline
+\textbf{Answer: Kernel main. (Boot up, then fork the menu thread, wait for a reboot request, and then shut down.)
+	from kern/main/main.c
+	}\\ \\
+\textit{Q22. Is it OK to initialise the thread system before the scheduler? Why (not)?}\newline
+\textbf{Answer: Yes. The scheduler bootstrap just creates the run queue, and the thread bootstrap just initializes the first thread.}\\ \\
+\textit{Q23. What is a zombie?}\newline
+\textbf{Answer: “Zombies are threads/processes that have exited but not been fully deleted yet.”
+	from kern/thread/thread.c
+	}\\ \\
+\textit{Q24. How large is the initial run queue?}\newline
+\textbf{Answer: The initial run queue is 32.}\\ \\
+\textit{Q25. What does a device name in OS/161 look like?}\newline
+\textbf{Answer: The name of a device is always device:, such as lhd0:
+	from kern/vfs/device.c
+	}\\ \\
+\textit{Q26. What does a raw device name in OS/161 look like?}\newline
+\textbf{Answer: The name with raw appended, such as lhd0raw,
+	from kern/vfs/vfslist.c 
+	}\\ \\
+\textit{Q27. What lock protects the vnode reference count?}\newline
+\textbf{Answer: vn\_countlock protects the vnode reference count from kern/vfs/vnode.c
+		}\\ \\
+\textit{Q28. What device types are currently supported?}\newline
+\textbf{Answer: The device types currently supported are block and character devices.
+	from kern/vfs/device.c
+	}\\ \\
+......................
+%\section{conclusion}
+\end{document}
